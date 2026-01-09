@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
     @ExceptionHandler(DomainException.class)
     public ResponseEntity<Void> handleDomainException(DomainException exception) {
-        return ResponseEntity.unprocessableContent().build();
+        return ResponseEntity.unprocessableEntity().build();
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
