@@ -5,7 +5,6 @@ import marcosvinicius.desafioitau.domain.transaction.TransactionRepository;
 import marcosvinicius.desafioitau.features.transactions.api.CreateTransactionRequest;
 import org.springframework.stereotype.Service;
 
-@Service
 public class CreateTransactionUseCase {
     private final TransactionRepository repository;
 
