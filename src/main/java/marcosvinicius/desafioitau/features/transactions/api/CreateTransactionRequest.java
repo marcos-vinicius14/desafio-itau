@@ -5,11 +5,11 @@ import jakarta.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
-public record TransactionRequest(
-        @NotBlank
+public record CreateTransactionRequest(
+        @NotBlank(message = "O valor da transação é obrigatório!")
         BigDecimal valor,
 
-        @NotBlank
+        @NotBlank(message = "A data para a transação é obrigatória!")
         OffsetDateTime dataHora
 ) {
 }

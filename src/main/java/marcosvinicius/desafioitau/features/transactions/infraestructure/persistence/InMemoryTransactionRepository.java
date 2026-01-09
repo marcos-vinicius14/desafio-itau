@@ -1,5 +1,6 @@
 package marcosvinicius.desafioitau.features.transactions.infraestructure.persistence;
 
+import marcosvinicius.desafioitau.domain.Statistics;
 import marcosvinicius.desafioitau.domain.transaction.Transaction;
 import marcosvinicius.desafioitau.domain.transaction.TransactionRepository;
 import marcosvinicius.desafioitau.domain.transaction.Transactions;
@@ -11,5 +12,15 @@ public class InMemoryTransactionRepository implements TransactionRepository {
     @Override
     public void save(Transaction transaction) {
         transactions.add(transaction);
+    }
+
+    @Override
+    public void clearAll() {
+        transactions.clear();
+    }
+
+    @Override
+    public Statistics getStatistics() {
+        return transactions.calculateLast60Seconds();
     }
 }
