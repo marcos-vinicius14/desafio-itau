@@ -1,4 +1,6 @@
-package marcosvinicius.desafioitau.domain;
+package marcosvinicius.desafioitau.domain.transaction;
+
+import marcosvinicius.desafioitau.domain.Statistics;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

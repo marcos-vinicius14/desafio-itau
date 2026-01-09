@@ -1,4 +1,4 @@
-package marcosvinicius.desafioitau.domain;
+package marcosvinicius.desafioitau.domain.transaction;
 
 import marcosvinicius.desafioitau.domain.exceptions.DomainException;
 
@@ -7,14 +7,7 @@ import java.time.OffsetDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
-/*
-* Tenham os campos valor e dataHora preenchidos
-    A transação NÃO DEVE acontecer no futuro
-    A transação DEVE ter acontecido a qualquer momento no passado
-    A transação NÃO DEVE ter valor negativo
-    A transação DEVE ter valor igual ou maior que 0 (zero)
 
-* */
 public final class Transaction {
     private final UUID id;
     private final BigDecimal amount;
@@ -34,6 +27,10 @@ public final class Transaction {
     }
     public OffsetDateTime getDate() {
         return date;
+    }
+
+    public UUID getId() {
+        return id;
     }
 
     private void ensurePositiveValue(BigDecimal amount) {
@@ -78,4 +75,6 @@ public final class Transaction {
     public String toString() {
         return "Transaction{id=" + id + ", amount=" + amount + ", date=" + date + '}';
     }
+
+
 }
