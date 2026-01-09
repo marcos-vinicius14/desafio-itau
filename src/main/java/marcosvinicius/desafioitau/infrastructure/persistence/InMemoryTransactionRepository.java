@@ -1,4 +1,4 @@
-package marcosvinicius.desafioitau.features.transactions.infraestructure.persistence;
+package marcosvinicius.desafioitau.infrastructure.persistence;
 
 import marcosvinicius.desafioitau.domain.Statistics;
 import marcosvinicius.desafioitau.domain.transaction.Transaction;
@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public final class InMemoryTransactionRepository implements TransactionRepository {
     private final Transactions transactions = new Transactions();
+
     @Override
     public void save(Transaction transaction) {
         transactions.add(transaction);
