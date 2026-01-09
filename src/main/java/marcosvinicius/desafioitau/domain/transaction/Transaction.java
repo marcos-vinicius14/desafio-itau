@@ -54,7 +54,8 @@ public final class Transaction {
     }
 
     public boolean happenedInTheLast(Long seconds) {
-        return date.isBefore(OffsetDateTime.now().minusSeconds(seconds));
+        OffsetDateTime limit = OffsetDateTime.now().minusSeconds(seconds);
+        return date.isAfter(limit);
     }
 
 

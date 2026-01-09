@@ -7,7 +7,7 @@ import marcosvinicius.desafioitau.domain.transaction.Transactions;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class InMemoryTransactionRepository implements TransactionRepository {
+public final class InMemoryTransactionRepository implements TransactionRepository {
     private final Transactions transactions = new Transactions();
     @Override
     public void save(Transaction transaction) {

@@ -9,10 +9,7 @@ import java.util.DoubleSummaryStatistics;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-/**
- * First Class Collection que gerencia o armazenamento em memória.
- * Implementa a lógica de estatísticas de forma performática.
- */
+
 public class Transactions {
 
     private final Set<Transaction> storage = Collections.synchronizedSet(new LinkedHashSet<>());

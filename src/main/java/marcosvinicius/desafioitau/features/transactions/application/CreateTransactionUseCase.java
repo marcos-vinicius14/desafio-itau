@@ -3,9 +3,8 @@ package marcosvinicius.desafioitau.features.transactions.application;
 import marcosvinicius.desafioitau.domain.transaction.Transaction;
 import marcosvinicius.desafioitau.domain.transaction.TransactionRepository;
 import marcosvinicius.desafioitau.features.transactions.api.CreateTransactionRequest;
-import org.springframework.stereotype.Service;
 
-public class CreateTransactionUseCase {
+public final class CreateTransactionUseCase {
     private final TransactionRepository repository;
 
     public CreateTransactionUseCase(TransactionRepository repository) {
@@ -15,6 +14,6 @@ public class CreateTransactionUseCase {
     public void execute(CreateTransactionRequest request) {
         Transaction transaction = new Transaction(request.valor(), request.dataHora());
         repository.save(transaction);
-        System.out.println(STR."Transação registrada com sucesso: \{transaction.getId()}");
+        System.out.println("Transação registrada com sucesso: " + transaction.getId());
     }
 }
