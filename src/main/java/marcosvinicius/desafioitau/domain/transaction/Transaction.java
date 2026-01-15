@@ -51,6 +51,10 @@ public final class Transaction {
         if (date.isAfter(OffsetDateTime.now())) {
             throw new DomainException("A data da transação não pode estar no futuro");
         }
+
+        if (date.isBefore(OffsetDateTime.now().minusSeconds(60))) {
+            throw new DomainException("A data da transação não pode ser anterior a 60 segundos");
+        }
     }
 
     public boolean happenedInTheLast(Long seconds) {

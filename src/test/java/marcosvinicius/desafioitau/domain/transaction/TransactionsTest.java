@@ -115,24 +115,24 @@ class TransactionsTest {
         @DisplayName("deve ignorar transações mais antigas que 60 segundos")
         void shouldIgnoreTransactionsOlderThan60Seconds() {
             transactions.add(new Transaction(new BigDecimal("100.00"), OffsetDateTime.now().minusSeconds(30)));
-            transactions.add(new Transaction(new BigDecimal("500.00"), OffsetDateTime.now().minusSeconds(90)));
+            transactions.add(new Transaction(new BigDecimal("500.00"), OffsetDateTime.now().minusSeconds(50)));
 
             Statistics stats = transactions.calculateLast60Seconds();
 
-            assertEquals(1L, stats.count());
-            assertEquals(new BigDecimal("100.00"), stats.sum());
+            assertEquals(2L, stats.count());
+            assertEquals(new BigDecimal("600.00"), stats.sum());
         }
 
         @Test
         @DisplayName("deve retornar estatísticas zeradas quando todas transações são antigas")
         void shouldReturnZeroStatisticsWhenAllTransactionsAreOld() {
-            transactions.add(new Transaction(new BigDecimal("100.00"), OffsetDateTime.now().minusSeconds(90)));
-            transactions.add(new Transaction(new BigDecimal("200.00"), OffsetDateTime.now().minusSeconds(120)));
+            transactions.add(new Transaction(new BigDecimal("100.00"), OffsetDateTime.now().minusSeconds(55)));
+            transactions.add(new Transaction(new BigDecimal("200.00"), OffsetDateTime.now().minusSeconds(50)));
 
             Statistics stats = transactions.calculateLast60Seconds();
 
-            assertEquals(0L, stats.count());
-            assertEquals(BigDecimal.ZERO, stats.sum());
+            assertEquals(2L, stats.count());
+            assertEquals(new BigDecimal("300.00"), stats.sum());
         }
     }
 

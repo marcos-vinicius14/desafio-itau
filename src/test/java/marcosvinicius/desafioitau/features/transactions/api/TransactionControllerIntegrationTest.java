@@ -46,7 +46,7 @@ class TransactionControllerIntegrationTest {
                     "valor": 100.50,
                     "dataHora": "%s"
                 }
-                """.formatted(OffsetDateTime.now().minusMinutes(5).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
+                """.formatted(OffsetDateTime.now().minusSeconds(30).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
 
             mockMvc.perform(post("/transacao")
                             .contentType(MediaType.APPLICATION_JSON)
@@ -62,7 +62,7 @@ class TransactionControllerIntegrationTest {
                     "valor": -50.00,
                     "dataHora": "%s"
                 }
-                """.formatted(OffsetDateTime.now().minusMinutes(5).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
+                """.formatted(OffsetDateTime.now().minusSeconds(30).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
 
             mockMvc.perform(post("/transacao")
                             .contentType(MediaType.APPLICATION_JSON)
@@ -93,7 +93,7 @@ class TransactionControllerIntegrationTest {
                 {
                     "dataHora": "%s"
                 }
-                """.formatted(OffsetDateTime.now().minusMinutes(5).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
+                """.formatted(OffsetDateTime.now().minusSeconds(30).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
 
             mockMvc.perform(post("/transacao")
                             .contentType(MediaType.APPLICATION_JSON)
@@ -141,7 +141,7 @@ class TransactionControllerIntegrationTest {
                     "valor": 100.00,
                     "dataHora": "%s"
                 }
-                """.formatted(OffsetDateTime.now().minusMinutes(1).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
+                """.formatted(OffsetDateTime.now().minusSeconds(30).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
 
             mockMvc.perform(post("/transacao")
                             .contentType(MediaType.APPLICATION_JSON)

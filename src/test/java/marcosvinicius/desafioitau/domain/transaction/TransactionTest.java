@@ -21,7 +21,7 @@ class TransactionTest {
         @DisplayName("deve criar transação com valores válidos")
         void shouldCreateTransactionWithValidValues() {
             BigDecimal amount = new BigDecimal("100.50");
-            OffsetDateTime date = OffsetDateTime.now().minusMinutes(5);
+            OffsetDateTime date = OffsetDateTime.now().minusSeconds(30);
 
             Transaction transaction = new Transaction(amount, date);
 
@@ -33,7 +33,7 @@ class TransactionTest {
         @Test
         @DisplayName("deve lançar exceção quando valor é nulo")
         void shouldThrowExceptionWhenAmountIsNull() {
-            OffsetDateTime date = OffsetDateTime.now().minusMinutes(5);
+            OffsetDateTime date = OffsetDateTime.now().minusSeconds(30);
 
             DomainException exception = assertThrows(DomainException.class,
                     () -> new Transaction(null, date));
@@ -45,7 +45,7 @@ class TransactionTest {
         @DisplayName("deve lançar exceção quando valor é negativo")
         void shouldThrowExceptionWhenAmountIsNegative() {
             BigDecimal negativeAmount = new BigDecimal("-50.00");
-            OffsetDateTime date = OffsetDateTime.now().minusMinutes(5);
+            OffsetDateTime date = OffsetDateTime.now().minusSeconds(30);
 
             DomainException exception = assertThrows(DomainException.class,
                     () -> new Transaction(negativeAmount, date));
@@ -57,7 +57,7 @@ class TransactionTest {
         @DisplayName("deve aceitar valor igual a zero")
         void shouldAcceptZeroAmount() {
             BigDecimal zero = BigDecimal.ZERO;
-            OffsetDateTime date = OffsetDateTime.now().minusMinutes(5);
+            OffsetDateTime date = OffsetDateTime.now().minusSeconds(30);
 
             Transaction transaction = new Transaction(zero, date);
 
@@ -86,6 +86,18 @@ class TransactionTest {
 
             assertEquals("A data da transação não pode estar no futuro", exception.getMessage());
         }
+
+        @Test
+        @DisplayName("deve lançar exceção quando data é anterior a 60 segundos")
+        void shouldThrowExceptionWhenDateIsOlderThan60Seconds() {
+            BigDecimal amount = new BigDecimal("100.00");
+            OffsetDateTime oldDate = OffsetDateTime.now().minusSeconds(90);
+
+            DomainException exception = assertThrows(DomainException.class,
+                    () -> new Transaction(amount, oldDate));
+
+            assertEquals("A data da transação não pode ser anterior a 60 segundos", exception.getMessage());
+        }
     }
 
     @Nested
@@ -107,11 +119,11 @@ class TransactionTest {
         @DisplayName("deve retornar false quando transação é mais antiga que N segundos")
         void shouldReturnFalseWhenTransactionIsOlderThanNSeconds() {
             BigDecimal amount = new BigDecimal("100.00");
-            OffsetDateTime date = OffsetDateTime.now().minusSeconds(90);
+            OffsetDateTime date = OffsetDateTime.now().minusSeconds(30);
 
             Transaction transaction = new Transaction(amount, date);
 
-            assertFalse(transaction.happenedInTheLast(60L));
+            assertFalse(transaction.happenedInTheLast(20L));
         }
     }
 
@@ -123,7 +135,7 @@ class TransactionTest {
         @DisplayName("deve ser igual a si mesmo")
         void shouldBeEqualToItself() {
             BigDecimal amount = new BigDecimal("100.00");
-            OffsetDateTime date = OffsetDateTime.now().minusMinutes(5);
+            OffsetDateTime date = OffsetDateTime.now().minusSeconds(30);
 
             Transaction transaction = new Transaction(amount, date);
 
@@ -134,7 +146,7 @@ class TransactionTest {
         @DisplayName("transações diferentes devem ter IDs diferentes")
         void differentTransactionsShouldHaveDifferentIds() {
             BigDecimal amount = new BigDecimal("100.00");
-            OffsetDateTime date = OffsetDateTime.now().minusMinutes(5);
+            OffsetDateTime date = OffsetDateTime.now().minusSeconds(30);
 
             Transaction t1 = new Transaction(amount, date);
             Transaction t2 = new Transaction(amount, date);

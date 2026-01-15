@@ -14,20 +14,27 @@ public class GlobalExceptionHandler {
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(DomainException.class)
-    public ResponseEntity<Void> handleDomainException(DomainException exception) {
+    public ResponseEntity<ErrorResponse> handleDomainException(DomainException exception) {
         log.warn("Violação de regra de domínio: {}", exception.getMessage());
-        return ResponseEntity.unprocessableEntity().build();
+        ErrorResponse error = new ErrorResponse(422, "Unprocessable Entity", exception.getMessage());
+        return ResponseEntity.unprocessableEntity().body(error);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<Void> handleHttpMessageNotReadableException(HttpMessageNotReadableException exception) {
+    public ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException exception) {
         log.error("Erro na leitura da mensagem HTTP: {}", exception.getMessage());
-        return ResponseEntity.badRequest().build();
+        ErrorResponse error = new ErrorResponse(400, "Bad Request", "JSON mal formatado ou inválido");
+        return ResponseEntity.badRequest().body(error);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Void> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
+    public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
         log.warn("Erro de validação de argumento: {}", exception.getMessage());
-        return ResponseEntity.badRequest().build();
+        String message = exception.getBindingResult().getFieldErrors().stream()
+                .map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
+                .findFirst()
+                .orElse("Erro de validação");
+        ErrorResponse error = new ErrorResponse(400, "Bad Request", message);
+        return ResponseEntity.badRequest().body(error);
     }
 }

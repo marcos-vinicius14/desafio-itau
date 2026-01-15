@@ -104,8 +104,8 @@ class StatisticsControllerIntegrationTest {
         }
 
         @Test
-        @DisplayName("deve ignorar transações mais antigas que 60 segundos")
-        void shouldIgnoreTransactionsOlderThan60Seconds() throws Exception {
+        @DisplayName("deve rejeitar transações mais antigas que 60 segundos")
+        void shouldRejectTransactionsOlderThan60Seconds() throws Exception {
             // Cria uma transação recente
             String recentRequest = """
                 {
@@ -119,7 +119,7 @@ class StatisticsControllerIntegrationTest {
                             .content(recentRequest))
                     .andExpect(status().isCreated());
 
-            // Cria uma transação antiga (mais de 60 segundos)
+            // Tenta criar uma transação antiga (mais de 60 segundos)
             String oldRequest = """
                 {
                     "valor": 500.00,
@@ -130,7 +130,7 @@ class StatisticsControllerIntegrationTest {
             mockMvc.perform(post("/transacao")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(oldRequest))
-                    .andExpect(status().isCreated());
+                    .andExpect(status().isUnprocessableEntity());
 
             // Verifica que apenas a transação recente é considerada
             mockMvc.perform(get("/estatistica")
